@@ -38,7 +38,7 @@ const int right_digit_patterns[10][7] = {
 };
 
 int cabeca_pbm(FILE *file, int *width, int *height){
-    char format[3];//XXX por que tem esse format?
+    char format[3];
     if(fscanf(file, %2s, format)!=1 || strcmp(format, "P1")!=0)){
         fprintf(stderr, "ERRO: não é um arquivo PBM válido\n");
         return -1; 
@@ -74,4 +74,5 @@ unsigned char** dados_pbm(FILE *file, int width, int height){
     }
 
     //continuar a partir de height: parte que avisa falha na leitura da imagem
+    //a função verbarra em io_pbm tem muita semelhança ao que ta aqui
 }
