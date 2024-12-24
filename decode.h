@@ -1,5 +1,8 @@
 #include <stdio.h>
-#include <stdbool.h>//código a ser feito ainda
+#include <stdbool.h>
+#include <errno.h>
+#include "io_pbm.h" //código a ser feito ainda
+#include "id_main.c" //acho que algumas coisas desse vão ter que vir em h 
 #define WIDTH 100 //colocar esse números no arquivo h
 #define HEIGHT 100
 
