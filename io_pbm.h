@@ -1,5 +1,8 @@
 #include <stdio.h>
-#include <stdbool.h> //código a ser feito ainda
+#include <stdbool.h>
+#include <errno.h>
+#include "id_main.c" //acho que algumas coisas desse vão ter que vir em h 
+#include "ean8.h" //código a ser feito ainda
 #define WIDTH 100 //colocar esse números no arquivo h
 #define HEIGHT 100
 
