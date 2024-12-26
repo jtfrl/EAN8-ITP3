@@ -2,9 +2,8 @@
 #include <stdbool.h>
 #include <errno.h>
 #include "id_main.c" //acho que algumas coisas desse vão ter que vir em h 
-#include "ean8.h" //código a ser feito ainda
-#define WIDTH 100 //colocar esse números no arquivo h
-#define HEIGHT 100
+#define WIDTH 209 //colocar esse números no arquivo h
+#define HEIGHT 58
 
 const int start_end_pattern[] = {1, 0, 1};
 const int f_end_pattern[] = {1, 0, 1};
