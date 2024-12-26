@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <errno.h>
 #include <string.h>
 #include "decode.h"
-#include "pbm.h"
-#define WIDTH 100 //colocar esse números no arquivo h
-#define HEIGHT 100
+#include "io_pbm.h"
+#define WIDTH 209 //colocar esse números no arquivo h
+#define HEIGHT 58
 
 const int start_end_pattern[] = {1, 0, 1};
 const int f_end_pattern[] = {1, 0, 1};
@@ -54,9 +55,6 @@ int cabeca_pbm(FILE *file, int *width, int *height){
 }
 
 
-//ATENÇÃO: AQUI ESTÃO OS TAMANHOS - ALTURA: 58PX | LARGURA: 209PX
-
-
 unsigned char** dados_pbm(FILE *file, int width, int height){
     unsigned char **image = (unsigned char **)malloc(height *sizeof(unsigned char *));
     //cria espaço na memória para altura da imagem fornecida 
@@ -74,5 +72,29 @@ unsigned char** dados_pbm(FILE *file, int width, int height){
     }
 
     //continuar a partir de height: parte que avisa falha na leitura da imagem
-    //a função verbarra em io_pbm tem muita semelhança ao que ta aqui
+    for (i=0; i<height;i++){
+        for(j=0;j<width;j++){
+            if(fscanf(file,"%hhu", &image[i][j]!=1)){
+                fprintf(stderr,"ERRO: falha em ler dados de imagem\n");
+                return NULL;
+            }
+        }
+    }
+
+
+    return imagem;
+
 }
+
+//função que vai liberar a alocação de memória
+
+void libera_pbm(unsigned char **image, int height){
+    for (int i=0;i<height;i++){
+        free(image[i]);
+    }
+    free(image);
+}
+
+//continuar com o código para liberação da memória (logo depois de free(image))
+//aqui: https://pastebin.com/w2iiQvWk
+
