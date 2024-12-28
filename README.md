@@ -8,3 +8,4 @@ A seguir, uma descrição breve de cada arquivo para **identificador de códigos
 - io_pbm.h: carregamento de imagem e detecção de barra em arquivos .pbm;
 - id_main.c: código que vai receber o que o usuário inserir (nesse caso a imagem em .pbm). Especificamente, ele recebe a imagem .pbm inserida pelo usuário, chama as funções necessárias para ler o arquivo, detectar as barras e decodificar o código EAN-8, e finalmente apresenta o resultado ao usuário. Também executa o seguinte:
     - fornece funções para abrir e ler o conteúdo de arquivos .pbm, transformando-os em uma estrutura de dados utilizável pelo programa. Esta leitura é um passo essencial antes que qualquer processamento ou decodificação possa ocorrer. 
+[gerador de códigos EAN-8: a ser adicionado]
