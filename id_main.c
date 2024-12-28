@@ -5,7 +5,7 @@
 #include <string.h>
 #include "decode.h"
 #include "io_pbm.h"
-#define WIDTH 209 //colocar esse números no arquivo h
+#define WIDTH 209
 #define HEIGHT 58
 
 const int start_end_pattern[] = {1, 0, 1};
@@ -37,6 +37,9 @@ const int right_digit_patterns[10][7] = {
    {1, 0, 0, 1, 0, 0, 0}
    {1, 1, 1, 0, 1, 0, 0}
 };
+
+void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]);
+//espaço pra declaração implicita em decode.h (pegar alguma função de la)
 
 int cabeca_pbm(FILE *file, int *width, int *height){
     char format[3];
@@ -95,6 +98,54 @@ void libera_pbm(unsigned char **image, int height){
     free(image);
 }
 
-//continuar com o código para liberação da memória (logo depois de free(image))
-//aqui: https://pastebin.com/w2iiQvWk
+int main(int argc, char*argv[]){ 
+
+    int image[HEIGHT][WIDTH] = {0}; 
+    int x, y, larg, alt;
+    //IMPORTANTE inlcuir variáveis usadas em carregapbm
+    
+    //main que vai receber o que o usuário irá fornecer
+    if(argc!=2){
+        fprintf(stderr, "Usage: %s <pbm_file>\n", argv[0]);
+    return 1;
+    }
+    //arquivo é aberto
+    FILE *arquivo=fopen(argv[1], "r"){
+        //ocorre a leitura
+        if(arquivo==NULL){
+            fprintf(stderr, "ERRO: falha em abrir o arquivo %s\n", argv[1]);
+        }
+        return 1;
+    }
+
+    int width, height;
+    if(cabeca_pbm(arquivo, &width, &height)!=0){
+        fclose(arquivo);
+        return 1;
+    }
+    fclose(arquivo);
+
+    //io_pbm entra em ação
+
+    carrega_pbm(filename, image);
+    verbarra_pbm(image, &x, &y, &larg, &alt);
+
+
+    //cadeia de condição para decode.h; esboço a seguir
+
+    /*
+      if (verifica_ean8(image)) {
+        printf("EAN-8 code detected\n");
+    } else {
+        printf("EAN-8 code not detected\n");
+    }
+    
+    
+    */
+
+    libera_pbm(image, height);
+
+    return 0;
+}
+
 
