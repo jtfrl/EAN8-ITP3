@@ -69,7 +69,7 @@ unsigned char** dados_pbm(FILE *file, int width, int height){
     for (int i=0; i<height;i++){
         image[i]=(unsigned char *)malloc(width * sizeof(unsigned char));
         if (image[i]==NULL){
-            fprintf("ERRO: falha de alocação da memória nas linhas da imagem\n");
+            fprintf(stderr, "ERRO: falha de alocação da memória nas linhas da imagem\n");
             return NULL;
         }
     }
@@ -111,7 +111,7 @@ int main(int argc, char*argv[]){
     return 1;
     }
     //arquivo é aberto
-    FILE (*arquivo=fopen(argv[1], "r"){
+    FILE (*arquivo)=fopen(argv[1], "r"){
         //ocorre a leitura
         if(arquivo==NULL){
             fprintf(stderr, "ERRO: falha em abrir o arquivo %s\n", argv[1]);
@@ -124,6 +124,7 @@ int main(int argc, char*argv[]){
         fclose(arquivo);
         return 1;
     }
+    
     fclose(arquivo);
 
 
