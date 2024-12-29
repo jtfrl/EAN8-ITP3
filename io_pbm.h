@@ -36,7 +36,7 @@ unsigned short largBarra(const unsigned char* buf){
 void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]){
     FILE *arquivo=fopen(filename, "r");
     //aqui começa a leitura de fato e o carregamento em si
-    if(file==NULL){
+    if(arquivo==NULL){
         perror("Erro ao abrir arquivo");
         exit(EXIT_FAILURE);
     }
@@ -64,7 +64,7 @@ void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]){
         }
     }
 
-    fclose(arquivo));
+    fclose(arquivo);
 
 }
 
