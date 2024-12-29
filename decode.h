@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <errno.h>
+#include <math.h>
 #include "io_pbm.h" 
 
 #ifndef EAN8_DECODE
@@ -10,18 +11,46 @@
 #define START_STOP_MOD_LENGTH 3
 #define SAFETY_OFFSET 2
 
-typedef struct{
-    int width, height;
-    unsigned char* pImg;
-    unsigned char* pMeio;
-    unsigned char* barra_larg;
-}imgInfo;
-
 const unsigned char* passaMargem(const unsigned char* buf);
 unsigned short largBarra(const unsigned char* buf);
 void verbarra_pbm(int imagem[HEIGHT][WIDTH], int *x, int *y, int *larg, int *alt);
 
 #endif //fim de declaração para EAN8_DECODE (uso de io_pbm)
+
+
+#ifndef EAN8_TABELAS
+
+const int start_end_pattern[] = {1, 0, 1};
+const int f_end_pattern[] = {1, 0, 1};
+const int c_end_pattern[] = {0, 1, 0, 1, 0};
+const int left_digit_patterns[10][7] = {
+    {0, 0, 0, 1, 1, 0, 1},
+    {0, 0, 1, 1, 0, 0, 1},
+    {0, 0, 1, 0, 0, 1, 1},
+    {0, 1, 1, 1, 1, 0, 1},
+    {0, 1, 0, 0, 0, 1, 1},
+    {0, 1, 1, 0, 0, 0, 1},
+    {0, 1, 0, 1, 1, 1, 1},
+    {0, 1, 1, 1, 0, 1, 1},
+    {0, 1, 1, 0, 1, 1, 1},
+    {0, 0, 0, 1, 0, 1, 1}
+};
+
+
+const int right_digit_patterns[10][7] = {
+   {1, 1, 1, 0, 0, 1, 0}
+   {1, 1, 0, 0, 1, 1, 0}
+   {1, 1, 0, 1, 1, 0, 0}
+   {1, 0, 0, 0, 0, 1, 0}
+   {1, 0, 1, 1, 1, 0, 0}
+   {1, 0, 0, 1, 1, 1, 0}
+   {1, 0, 1, 0, 0, 0, 0}
+   {1, 0, 0, 0, 1, 0, 0}
+   {1, 0, 0, 1, 0, 0, 0}
+   {1, 1, 1, 0, 1, 0, 0}
+};
+
+#endif //inclusão de codificação para cada padrão (esquerda e direita)
 
 void decode_ean8(int bin_representa[], int decode_d[]){
     //decodifica barras
@@ -50,7 +79,7 @@ void decode_ean8(int bin_representa[], int decode_d[]){
 
 }
 
-int checasoma(int decode_d[]){
+int checasoma(int *decode_d[]){
     int soma=0;
     for(int i=0;i<8;i++){
         soma+=decode_d[i] * (i%2==0? 3 : 1); //considera o peso da soma
