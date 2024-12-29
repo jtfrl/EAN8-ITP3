@@ -2,14 +2,10 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <errno.h>
-#include "id_main.c" 
-#include "ean8.h" 
 #define WIDTH 209
 #define HEIGHT 58   
-#define START_STOP_MOD_TAM 3 
+#define START_STOP_MOD_TAM 3 //marcador de final e início
 #define SAFETY_OFFSET 2
-
-//START_STOP_MOD_TAM: marcador de final e início
 
 typedef struct{
     int width, height;
@@ -35,36 +31,6 @@ unsigned short largBarra(const unsigned char* buf){
     return larg_Barra;
 }
 
-const int start_end_pattern[] = {1, 0, 1};
-const int f_end_pattern[] = {1, 0, 1};
-const int c_end_pattern[] = {0, 1, 0, 1, 0};
-const int left_digit_patterns[10][7] = {
-    {0, 0, 0, 1, 1, 0, 1},
-    {0, 0, 1, 1, 0, 0, 1},
-    {0, 0, 1, 0, 0, 1, 1},
-    {0, 1, 1, 1, 1, 0, 1},
-    {0, 1, 0, 0, 0, 1, 1},
-    {0, 1, 1, 0, 0, 0, 1},
-    {0, 1, 0, 1, 1, 1, 1},
-    {0, 1, 1, 1, 0, 1, 1},
-    {0, 1, 1, 0, 1, 1, 1},
-    {0, 0, 0, 1, 0, 1, 1}
-};
-
-
-const int right_digit_patterns[10][7] = {
-   {1, 1, 1, 0, 0, 1, 0}
-   {1, 1, 0, 0, 1, 1, 0}
-   {1, 1, 0, 1, 1, 0, 0}
-   {1, 0, 0, 0, 0, 1, 0}
-   {1, 0, 1, 1, 1, 0, 0}
-   {1, 0, 0, 1, 1, 1, 0}
-   {1, 0, 1, 0, 0, 0, 0}
-   {1, 0, 0, 0, 1, 0, 0}
-   {1, 0, 0, 1, 0, 0, 0}
-   {1, 1, 1, 0, 1, 0, 0}
-};
-
 //IMPORTANTE: a parte acima acho que vai ser válida para decode.h
 
 void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]){
@@ -80,7 +46,7 @@ void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]){
     fscanf(arquivo, "%2s, %d, %d", format, &width, &height);
 
     //leitura dos dados a serem processados
-    for(int y=0; y<HEIHT; y++){
+    for(int y=0; y<HEIGHT; y++){
         for(int x=0; x<WIDTH; x++){
             char c;
             do{
@@ -98,7 +64,7 @@ void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]){
         }
     }
 
-    fclose(file);
+    fclose(arquivo));
 
 }
 
@@ -121,7 +87,7 @@ void verbarra_pbm(int imagem[HEIGHT][WIDTH], int *x, int *y, int *larg, int *alt
         unsigned short larg_Barra=largBarra(buf);
 
         //Calcula as coodernadas e as dimensões da região da barra
-        *x=(buf-pMeio)*barWidth;
+        *x=(buf-pMeio)*larg_Barra;
         *y=yMeio;
         *larg=WIDTH; //assume que o código de barras abarca largura pre definida
         *alt=larg_Barra*(START_STOP_MOD_TAM*2+8*7+5);//total das áreas em codificação
