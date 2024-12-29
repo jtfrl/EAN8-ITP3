@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <errno.h>
-#include "id_main.c" 
 #include "io_pbm.h" 
 
 #ifndef EAN8_DECODE
@@ -23,37 +22,6 @@ unsigned short largBarra(const unsigned char* buf);
 void verbarra_pbm(int imagem[HEIGHT][WIDTH], int *x, int *y, int *larg, int *alt);
 
 #endif //fim de declaração para EAN8_DECODE (uso de io_pbm)
-
-
-const int start_end_pattern[] = {1, 0, 1};
-const int f_end_pattern[] = {1, 0, 1};
-const int c_end_pattern[] = {0, 1, 0, 1, 0};
-const int left_digit_patterns[10][7] = {
-    {0, 0, 0, 1, 1, 0, 1},
-    {0, 0, 1, 1, 0, 0, 1},
-    {0, 0, 1, 0, 0, 1, 1},
-    {0, 1, 1, 1, 1, 0, 1},
-    {0, 1, 0, 0, 0, 1, 1},
-    {0, 1, 1, 0, 0, 0, 1},
-    {0, 1, 0, 1, 1, 1, 1},
-    {0, 1, 1, 1, 0, 1, 1},
-    {0, 1, 1, 0, 1, 1, 1},
-    {0, 0, 0, 1, 0, 1, 1}
-};
-
-
-const int right_digit_patterns[10][7] = {
-   {1, 1, 1, 0, 0, 1, 0},
-   {1, 1, 0, 0, 1, 1, 0},
-   {1, 1, 0, 1, 1, 0, 0},
-   {1, 0, 0, 0, 0, 1, 0},
-   {1, 0, 1, 1, 1, 0, 0},
-   {1, 0, 0, 1, 1, 1, 0},
-   {1, 0, 1, 0, 0, 0, 0},
-   {1, 0, 0, 0, 1, 0, 0},
-   {1, 0, 0, 1, 0, 0, 0},
-   {1, 1, 1, 0, 1, 0, 0}
-};
 
 void decode_ean8(int bin_representa[], int decode_d[]){
     //decodifica barras
