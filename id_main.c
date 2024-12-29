@@ -26,15 +26,15 @@ const int left_digit_patterns[10][7] = {
 
 
 const int right_digit_patterns[10][7] = {
-   {1, 1, 1, 0, 0, 1, 0}
-   {1, 1, 0, 0, 1, 1, 0}
-   {1, 1, 0, 1, 1, 0, 0}
-   {1, 0, 0, 0, 0, 1, 0}
-   {1, 0, 1, 1, 1, 0, 0}
-   {1, 0, 0, 1, 1, 1, 0}
-   {1, 0, 1, 0, 0, 0, 0}
-   {1, 0, 0, 0, 1, 0, 0}
-   {1, 0, 0, 1, 0, 0, 0}
+   {1, 1, 1, 0, 0, 1, 0},
+   {1, 1, 0, 0, 1, 1, 0},
+   {1, 1, 0, 1, 1, 0, 0},
+   {1, 0, 0, 0, 0, 1, 0},
+   {1, 0, 1, 1, 1, 0, 0},
+   {1, 0, 0, 1, 1, 1, 0},
+   {1, 0, 1, 0, 0, 0, 0},
+   {1, 0, 0, 0, 1, 0, 0},
+   {1, 0, 0, 1, 0, 0, 0},
    {1, 1, 1, 0, 1, 0, 0}
 };
 
@@ -43,13 +43,13 @@ void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]);
 
 int cabeca_pbm(FILE *file, int *width, int *height){
     char format[3];
-    if(fscanf(file, "%2s", format)!=1 || strcmp(format, "P1")!=0)){
+    if(fscanf(file, "%2s", format)!=1 || strcmp(format, "P1")!=0){
         fprintf(stderr, "ERRO: não é um arquivo PBM válido\n");
         return -1; 
     }//leitura da formatação: checa se o formato P1 esta indicado
 
 
-    if(fscanf(file, "%d %d", width, height)!=2)){
+    if(fscanf(file, "%d %d", width, height)!=2){
         fprintf(stderr, "ERRO: falha na leitura das dimensões da imagem\n");
         return -1;
     }//leitura de dimensões
@@ -68,7 +68,7 @@ unsigned char** dados_pbm(FILE *file, int width, int height){
 
     for (int i=0; i<height;i++){
         image[i]=(unsigned char *)malloc(width * sizeof(unsigned char));
-        if image[i]==NULL{
+        if (image[i]==NULL){
             fprintf("ERRO: falha de alocação da memória nas linhas da imagem\n");
             return NULL;
         }
@@ -111,7 +111,7 @@ int main(int argc, char*argv[]){
     return 1;
     }
     //arquivo é aberto
-    FILE *arquivo=fopen(argv[1], "r"){
+    FILE (*arquivo=fopen(argv[1], "r"){
         //ocorre a leitura
         if(arquivo==NULL){
             fprintf(stderr, "ERRO: falha em abrir o arquivo %s\n", argv[1]);
