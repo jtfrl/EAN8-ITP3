@@ -54,7 +54,7 @@ void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]){
             }while(c!='0' && c!='1' && c!=EOF);
             if(c==EOF){
                 fprintf(stderr, "Erro inesperado de fim de arquivo\n");
-                fclose(file);
+                fclose(arquivo);
                 exit(EXIT_FAILURE);
             }
 
