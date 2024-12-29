@@ -6,8 +6,10 @@
 #include "ean8.h" 
 #define WIDTH 209
 #define HEIGHT 58   
-#define START_STOP_MOD_TAM 3
+#define START_STOP_MOD_TAM 3 
 #define SAFETY_OFFSET 2
+
+//START_STOP_MOD_TAM: marcador de final e início
 
 typedef struct{
     int width, height;
@@ -101,8 +103,29 @@ void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]){
 }
 
 void verbarra_pbm(int imagem[HEIGHT][WIDTH], int *x, int *y, int *larg, int *alt){
-        //dectecta região da barra
-        //procurar no doc tamanhos das dimensoes aceitas 
-        //algumas variaveis foram adaptadas, tenha atenção nisso
-        //continuar com verbarra_pbm aqui https://pastebin.com/9U3qFYx7
+        //converte a imagem de 2D para 1D
+        unsigned char* pImg = (unsigned char*)malloc(HEIGHT * WIDTH *sizeof(unsigned char));
+        for(int y=0;y<HEIGHT;y++){
+            for(int x=0;x<WIDTH;x++){
+                pImg[y*WIDTH+x]=(unsigned char)imagem[y][x];
+            }
+        }
+
+        //move para o meio
+
+        int yMeio=HEIGHT/2;
+        unsigned char* pMeio=pImg+yMeio*WIDTH;
+
+        //Passa pela margem, para pegar a largura das barras
+        const unsigned char* buf=passaMargem(pMeio);
+        unsigned short larg_Barra=largBarra(buf);
+
+        //Calcula as coodernadas e as dimensões da região da barra
+        *x=(buf-pMeio)*barWidth;
+        *y=yMeio;
+        *larg=WIDTH; //assume que o código de barras abarca largura pre definida
+        *alt=larg_Barra*(START_STOP_MOD_TAM*2+8*7+5);//total das áreas em codificação
+
+        free(pImg);
+
 }
