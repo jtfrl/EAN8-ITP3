@@ -3,10 +3,12 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
-#include "decode.h"
 #include "io_pbm.h"
 #define WIDTH 209
 #define HEIGHT 58
+
+#include "decode.h"
+#ifndef EAN8_TABELAS
 
 const int start_end_pattern[] = {1, 0, 1};
 const int f_end_pattern[] = {1, 0, 1};
@@ -37,6 +39,8 @@ const int right_digit_patterns[10][7] = {
    {1, 0, 0, 1, 0, 0, 0},
    {1, 1, 1, 0, 1, 0, 0}
 };
+
+#endif //inclusão de codificação para cada padrão (esquerda e direita)
 
 void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]);
 //espaço pra declaração implicita em decode.h (pegar alguma função de la)
@@ -108,16 +112,16 @@ int main(int argc, char*argv[]){
     //main que vai receber o que o usuário irá fornecer
     if(argc!=2){
         fprintf(stderr, "Usage: %s <pbm_file>\n", argv[0]);
-    return 1;
-    }
-    //arquivo é aberto
-    FILE (*arquivo)=fopen(argv[1], "r"){
-        //ocorre a leitura
-        if(arquivo==NULL){
-            fprintf(stderr, "ERRO: falha em abrir o arquivo %s\n", argv[1]);
-        }
         return 1;
     }
+    //arquivo é aberto
+    FILE *arquivo=fopen(argv[1], "r")
+        //ocorre a leitura
+    if(arquivo==NULL){
+        fprzntf(stderr, "ERRO: falha em abrir o arquivo %s\n", argv[1]);
+        return 1;
+    }
+    
 
     int width, height;
     if(cabeca_pbm(arquivo, &width, &height)!=0){
@@ -131,8 +135,8 @@ int main(int argc, char*argv[]){
     libera_pbm(image, height);
 
 
-    carrega_pbm(filename, image);//talvez seja preciso alterar filename
-    //aqui deve vir o caminho do arquivo, em vez de 'filename'
+    carrega_pbm(argv[1], image);//necessário argv
+    //argv[1] guarda o nome do arquivo em .pbm
     verbarra_pbm(image, &x, &y, &larg, &alt);
     decode_ean8(bin_representa, decode_d);
     checasoma(decode_d);
