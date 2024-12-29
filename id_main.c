@@ -43,7 +43,7 @@ void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]);
 
 int cabeca_pbm(FILE *file, int *width, int *height){
     char format[3];
-    if(fscanf(file, %2s, format)!=1 || strcmp(format, "P1")!=0)){
+    if(fscanf(file, "%2s", format)!=1 || strcmp(format, "P1")!=0)){
         fprintf(stderr, "ERRO: não é um arquivo PBM válido\n");
         return -1; 
     }//leitura da formatação: checa se o formato P1 esta indicado
@@ -75,8 +75,8 @@ unsigned char** dados_pbm(FILE *file, int width, int height){
     }
 
     //continuar a partir de height: parte que avisa falha na leitura da imagem
-    for (i=0; i<height;i++){
-        for(j=0;j<width;j++){
+    for (int i=0; i<height;i++){
+        for(int j=0;j<width;j++){
             if(fscanf(file,"%hhu", &image[i][j]!=1)){
                 fprintf(stderr,"ERRO: falha em ler dados de imagem\n");
                 return NULL;
@@ -85,7 +85,7 @@ unsigned char** dados_pbm(FILE *file, int width, int height){
     }
 
 
-    return imagem;
+    return image;
 
 }
 
@@ -130,10 +130,11 @@ int main(int argc, char*argv[]){
     libera_pbm(image, height);
 
 
-    carrega_pbm(filename, image);
+    carrega_pbm(filename, image);//talvez seja preciso alterar filename
+    //aqui deve vir o caminho do arquivo, em vez de 'filename'
     verbarra_pbm(image, &x, &y, &larg, &alt);
     decode_ean8(bin_representa, decode_d);
-    checasoma(decod_d);
+    checasoma(decode_d);
 
 
     //cadeia de condição para decode.h; esboço a seguir
