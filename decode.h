@@ -75,10 +75,10 @@ void decode_ean8(int bin_representa[], int decode_d[]){
 
 }
 
-int checasoma(int *decode_d[]){
+int checasoma(int decode_d[]){
     int soma=0;
     for(int i=0;i<8;i++){
-        int pesosEAN=(i%2==0? 3 : 1);
+        int pesosEAN=(i%2==0? 3 : 1); 
         soma+=(decode_d[i])*(pesosEAN); //considera o peso da soma
         //se par: 3; se ímpar: 1
     }
