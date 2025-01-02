@@ -6,43 +6,9 @@
 #include "io_pbm.h"
 #define WIDTH 209
 #define HEIGHT 58
-
 #include "decode.h"
-#ifndef EAN8_TABELAS
 
-const int start_end_pattern[] = {1, 0, 1};
-const int f_end_pattern[] = {1, 0, 1};
-const int c_end_pattern[] = {0, 1, 0, 1, 0};
-const int left_digit_patterns[10][7] = {
-    {0, 0, 0, 1, 1, 0, 1},
-    {0, 0, 1, 1, 0, 0, 1},
-    {0, 0, 1, 0, 0, 1, 1},
-    {0, 1, 1, 1, 1, 0, 1},
-    {0, 1, 0, 0, 0, 1, 1},
-    {0, 1, 1, 0, 0, 0, 1},
-    {0, 1, 0, 1, 1, 1, 1},
-    {0, 1, 1, 1, 0, 1, 1},
-    {0, 1, 1, 0, 1, 1, 1},
-    {0, 0, 0, 1, 0, 1, 1}
-};
-
-
-const int right_digit_patterns[10][7] = {
-   {1, 1, 1, 0, 0, 1, 0},
-   {1, 1, 0, 0, 1, 1, 0},
-   {1, 1, 0, 1, 1, 0, 0},
-   {1, 0, 0, 0, 0, 1, 0},
-   {1, 0, 1, 1, 1, 0, 0},
-   {1, 0, 0, 1, 1, 1, 0},
-   {1, 0, 1, 0, 0, 0, 0},
-   {1, 0, 0, 0, 1, 0, 0},
-   {1, 0, 0, 1, 0, 0, 0},
-   {1, 1, 1, 0, 1, 0, 0}
-};
-
-#endif //inclusão de codificação para cada padrão (esquerda e direita)
-
-void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]);
+//void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]);
 //espaço pra declaração implicita em decode.h (pegar alguma função de la)
 
 int cabeca_pbm(FILE *file, int *width, int *height){
@@ -78,7 +44,6 @@ unsigned char** dados_pbm(FILE *file, int width, int height){
         }
     }
 
-    //continuar a partir de height: parte que avisa falha na leitura da imagem
     for (int i=0; i<height;i++){
         for(int j=0;j<width;j++){
             if(fscanf(file,"%hhu", &image[i][j]!=1)){
@@ -124,11 +89,12 @@ int main(int argc, char*argv[]){
     
 
     int width, height;
+    /* TESTE: verificando se o trecho está causando redefinição
     if(cabeca_pbm(arquivo, &width, &height)!=0){
         fclose(arquivo);
         return 1;
     }
-    
+    */
     fclose(arquivo);
 
 
