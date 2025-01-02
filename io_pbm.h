@@ -1,7 +1,16 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <errno.h> 
+#include <errno.h>
+
+//teste com inclusão de header guards com imgInfo
+#ifndef PROCESSO_IMG 
+
+#define PROCESSO_IMG
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
 #define WIDTH 209
 #define HEIGHT 58   
 #define START_STOP_MOD_TAM 3 //marcador de final e início
@@ -13,6 +22,13 @@ typedef struct{
     unsigned char* pMeio;
     unsigned char* barra_larg;
 }imgInfo;
+
+const unsigned char* passaMargem(const unsigned char* buf);
+unsigned short largBarra(const unsigned char* buf);
+void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]);
+void verbarra_pbm(int imagem[HEIGHT][WIDTH], int *x, int *y, int *larg, int *alt);
+
+#endif //PROCESSA_IMG
 
 const unsigned char* passaMargem(const unsigned char* buf){
     while (*buf==1){
