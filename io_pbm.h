@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <errno.h>
+#include <errno.h> 
 #define WIDTH 209
 #define HEIGHT 58   
 #define START_STOP_MOD_TAM 3 //marcador de final e início
