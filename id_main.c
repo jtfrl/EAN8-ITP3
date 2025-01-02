@@ -71,7 +71,7 @@ int main(int argc, char*argv[]){
 
     int image[HEIGHT][WIDTH] = {0}; 
     int x, y, larg, alt;
-    int bin_representa, decode_d;
+    int bin_representa, decode_d[8];
     //IMPORTANTE inlcuir variáveis usadas em carregapbm
     
     //main que vai receber o que o usuário irá fornecer
@@ -80,7 +80,7 @@ int main(int argc, char*argv[]){
         return 1;
     }
     //arquivo é aberto
-    FILE *arquivo=fopen(argv[1], "r")
+    FILE *arquivo=fopen(argv[1], "r");
         //ocorre a leitura
     if(arquivo==NULL){
         fprzntf(stderr, "ERRO: falha em abrir o arquivo %s\n", argv[1]);
