@@ -72,6 +72,6 @@ int checasoma(int decode_d[]){
     //digito verificador
     int verifica=(int)(ceil(soma/10))*10-soma;
     return verifica;
-}
+} 
 
 
