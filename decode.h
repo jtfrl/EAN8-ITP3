@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <errno.h>
 #include <math.h>
-#include "io_pbm.h" 
+#include "io_pbm.c" 
 
 #ifndef EAN8_DECODE
 
