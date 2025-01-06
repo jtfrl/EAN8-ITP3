@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include "pImg.h"
+#include "id_main.c"
 
 const unsigned char* passaMargem(const unsigned char* buf){
     while (*buf==1){
