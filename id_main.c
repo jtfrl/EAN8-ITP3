@@ -5,7 +5,7 @@
 #include <string.h>
 #include "io_pbm.c"
 #define WIDTH 209
-#define HEIGHT 58
+#define HEIGHT 58 
 #include "decode.h"
 
 //void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]);
