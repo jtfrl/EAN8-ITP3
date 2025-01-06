@@ -2,9 +2,12 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <errno.h>
+#include "pImg.c"
+
+/* TESTE PARA EVITAR REDEFINIÇÃO (050125)
 
 //teste com inclusão de header guards com imgInfo
-#ifndef PROCESSO_IMG 
+#ifndef PROCESSO_IMG
 
 #define PROCESSO_IMG
 
@@ -29,6 +32,9 @@ void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]);
 void verbarra_pbm(int imagem[HEIGHT][WIDTH], int *x, int *y, int *larg, int *alt);
 
 #endif //PROCESSA_IMG
+
+
+*/
 
 const unsigned char* passaMargem(const unsigned char* buf){
     while (*buf==1){
