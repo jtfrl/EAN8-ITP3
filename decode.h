@@ -4,19 +4,6 @@
 #include <math.h>
 #include "io_pbm.c" 
 
-#ifndef EAN8_DECODE
-
-#define WIDTH 209 
-#define HEIGHT 58
-#define START_STOP_MOD_LENGTH 3
-#define SAFETY_OFFSET 2
-
-const unsigned char* passaMargem(const unsigned char* buf);
-unsigned short largBarra(const unsigned char* buf);
-void verbarra_pbm(int imagem[HEIGHT][WIDTH], int *x, int *y, int *larg, int *alt);
-
-#endif //fim de declaração para EAN8_DECODE (uso de io_pbm)
-
 const int start_end_pattern[] = {1, 0, 1};
 const int f_end_pattern[] = {1, 0, 1};
 const int c_end_pattern[] = {0, 1, 0, 1, 0};
