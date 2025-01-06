@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
-#include "io_pbm.h"
+#include "io_pbm.c"
 #define WIDTH 209
 #define HEIGHT 58
 #include "decode.h"
