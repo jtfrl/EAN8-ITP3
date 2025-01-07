@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
-#include "io_pbm.c"
-#define WIDTH 209
-#define HEIGHT 58 
+#include "pImg.h" //o programa toma as declarações implícitas de io_pbm.h
 #include "decode.h"
 
-//void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]);
-//espaço pra declaração implicita em decode.h (pegar alguma função de la)
+
+#define WIDTH 209
+#define HEIGHT 58
+
 
 int cabeca_pbm(FILE *file, int *width, int *height){
     char format[3];
