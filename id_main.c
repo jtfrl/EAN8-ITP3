@@ -71,7 +71,7 @@ int main(int argc, char*argv[]){
 
     int image[HEIGHT][WIDTH] = {0}; 
     int x, y, larg, alt;
-    int bin_representa, decode_d[8];
+    int bin_representa[56]=0, decode_d[8]={0};
     //IMPORTANTE inlcuir variáveis usadas em carregapbm
     
     //main que vai receber o que o usuário irá fornecer
@@ -98,10 +98,7 @@ int main(int argc, char*argv[]){
     fclose(arquivo);
 
 
-    libera_pbm(image, height);//talvez isso seja um vetor 
-
-
-    carrega_pbm(argv[1], image);//necessário argv
+    carrega_pbm(argv[1], image);
     //argv[1] guarda o nome do arquivo em .pbm
     verbarra_pbm(image, &x, &y, &larg, &alt);
     decode_ean8(bin_representa, decode_d);
@@ -120,18 +117,21 @@ int main(int argc, char*argv[]){
     
     */
     //decodificação e checagem de soma
-    int decode_r=decode_ean8(bin_representa, decode_d[8]);
-    int checaSoma=checasoma(decode_d[8])
+    int decode_r=decode_ean8(bin_representa, decode_d);
+    int checaSoma=checasoma(decode_d);
 
 
 
-    if((decode_r!=0 &&  (checaSoma!=0)){
+    if(decode_r!=0 && checaSoma!=0){
         printf("Código EAN-8\n");
         for (int k=0; k<8;k++){
             printf("%d ", decode_d[k]);
         }
         printf("\n");
     }
+
+    
+    libera_pbm(image,height);
 
     return 0;
 }
