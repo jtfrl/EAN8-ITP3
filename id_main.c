@@ -46,7 +46,7 @@ unsigned char** dados_pbm(FILE *file, int width, int height){
 
     for (int i=0; i<height;i++){
         for(int j=0;j<width;j++){
-            if(fscanf(file,"%hhu", &image[i][j]!=1)){
+            if(fscanf(file,"%hhu", &image[i][j]!=1)){ //alterar comparação de ponteiro
                 fprintf(stderr,"ERRO: falha em ler dados de imagem\n");
                 return NULL;
             }
@@ -83,7 +83,7 @@ int main(int argc, char*argv[]){
     FILE *arquivo=fopen(argv[1], "r");
         //ocorre a leitura
     if(arquivo==NULL){
-        fprzntf(stderr, "ERRO: falha em abrir o arquivo %s\n", argv[1]);
+        fprintf(stderr, "ERRO: falha em abrir o arquivo %s\n", argv[1]);
         return 1;
     }
     
@@ -98,7 +98,7 @@ int main(int argc, char*argv[]){
     fclose(arquivo);
 
 
-    libera_pbm(image, height);
+    libera_pbm(image, height);//talvez isso seja um vetor 
 
 
     carrega_pbm(argv[1], image);//necessário argv
@@ -119,7 +119,13 @@ int main(int argc, char*argv[]){
     
     
     */
-    if((decode_ean8!=0) &&  (checasoma!=0)){
+    //decodificação e checagem de soma
+    int decode_r=decode_ean8(bin_representa, decode_d[8]);
+    int checaSoma=checasoma(decode_d[8])
+
+
+
+    if((decode_r!=0 &&  (checaSoma!=0)){
         printf("Código EAN-8\n");
         for (int k=0; k<8;k++){
             printf("%d ", decode_d[k]);
