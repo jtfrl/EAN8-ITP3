@@ -46,7 +46,7 @@ unsigned char** dados_pbm(FILE *file, int width, int height){
 
     for (int i=0; i<height;i++){
         for(int j=0;j<width;j++){
-            if(fscanf(file,"%hhu", &image[i][j]!=1)){ //alterar comparação de ponteiro
+            if((fscanf(file,"%hhu", &image[i][j])!=1)){ //alterar comparação de ponteiro
                 fprintf(stderr,"ERRO: falha em ler dados de imagem\n");
                 return NULL;
             }
@@ -71,7 +71,7 @@ int main(int argc, char*argv[]){
 
     int image[HEIGHT][WIDTH] = {0}; 
     int x, y, larg, alt;
-    int bin_representa[56]=0, decode_d[8]={0};
+    int bin_representa[56]={0}, decode_d[8]={0};
     //IMPORTANTE inlcuir variáveis usadas em carregapbm
     
     //main que vai receber o que o usuário irá fornecer
@@ -117,7 +117,8 @@ int main(int argc, char*argv[]){
     
     */
     //decodificação e checagem de soma
-    int decode_r=decode_ean8(bin_representa, decode_d);
+    int decode_r=decode_ean8(bin_representa, decode_d); //não é possível fazer isso
+    //decode_ean8 é uma função do tipo void
     int checaSoma=checasoma(decode_d);
 
 
@@ -131,7 +132,7 @@ int main(int argc, char*argv[]){
     }
 
     
-    libera_pbm(image,height);
+    libera_pbm(image[58][209],height); //ver como image é definida como array
 
     return 0;
 }
