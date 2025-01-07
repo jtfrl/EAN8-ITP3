@@ -1,8 +1,11 @@
+#ifndef DECODE_H
+#define DECODE_H
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <errno.h>
 #include <math.h>
-#include "io_pbm.c" 
+#include "io_pbm.h" 
 
 const int start_end_pattern[] = {1, 0, 1};
 const int f_end_pattern[] = {1, 0, 1};
@@ -72,6 +75,7 @@ int checasoma(int decode_d[]){
     //digito verificador
     int verifica=(int)(ceil(soma/10))*10-soma;
     return verifica;
-} 
+}
 
 
+#endif //previne redefinição com DECODE_H
