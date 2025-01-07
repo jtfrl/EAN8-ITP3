@@ -85,3 +85,4 @@ void verbarra_pbm(int imagem[HEIGHT][WIDTH], int *x, int *y, int *larg, int *alt
         free(pImg);
 
 }
+ 
