@@ -43,26 +43,39 @@ void decode_ean8(int bin_representa[], int decode_d[]){
     //busca pelos dígitos iniciais e os dígitos finais
 
  
-    for (int i=0;i<7;i++){
+    for (int i=0;i<4;i++){
         //decodifica os numeros da esquerda
         for(int j=0;j<10;j++){
-            if(bin_representa[i]=left_digit_patterns[j][i]){
+            int corretoEsq=1;
+            for (int k=0; k<7; k++){
+                if(bin_representa[i*7+k]!=left_digit_patterns[j][k]){
+                    corretoEsq=0;
+                    break;
+                }
+            }
+            if(corretoEsq){
                 decode_d[i]=j;
                 break;
             }
         }
     }
 
-     for (int i=7;i<14;i++){
+     for (int i=4;i<8;i++){
         //decodifica os numeros da direita
         for(int j=0;j<10;j++){
-            if(bin_representa[i]=right_digit_patterns[j][i-7]){
+            int corretoDir=1; //verificador de correção para direita
+            for (int k=0; k<7; k++){
+                if(bin_representa[(i*7)+k]!=right_digit_patterns[j][k]){
+                    corretoDir=0;
+                    break;
+                }
+            }
+            if(corretoDir){
                 decode_d[i]=j;
                 break;
             }
         }
     }
-
 }
 
 int checasoma(int decode_d[]){
