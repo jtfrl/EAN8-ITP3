@@ -1,3 +1,6 @@
+#ifndef PIMG_H
+#define PIMG_H
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -18,3 +21,5 @@ unsigned short largBarra(const unsigned char* buf);
 void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]);
 void verbarra_pbm(int imagem[HEIGHT][WIDTH], int *x, int *y, int *larg, int *alt);
 
+
+#endif //previne redefinição para PIMG_H
