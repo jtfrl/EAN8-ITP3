@@ -38,7 +38,7 @@ const int right_digit_patterns[10][7] = {
 };
 
 
-void decode_ean8(int bin_representa[], int decode_d[]){
+void decode_ean8(int bin_representa[], int decode_d[], int *status){
     //decodifica barras
     //busca pelos dígitos iniciais e os dígitos finais
 
@@ -75,6 +75,12 @@ void decode_ean8(int bin_representa[], int decode_d[]){
                 break;
             }
         }
+    }
+
+    if(corretoEsq==0 && corretoDir==0){
+        *status=0;
+    }else{
+        *status=1;//indica sucesso
     }
 }
 
