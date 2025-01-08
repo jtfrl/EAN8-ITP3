@@ -80,7 +80,7 @@ void decode_ean8(int bin_representa[], int decode_d[], int *status){
     int val_corretoDir=corretoDir;
 
 
-    if(corretoEsq==0 && corretoDir==0){
+    if(val_corretoEsq==0 && val_corretoDir==0){
         *status=0;
     }else{
         *status=1;//indica sucesso
