@@ -33,14 +33,28 @@ void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]){
     //podemos partir do ponto em que a checagem de formato já foi feita
     char format[3];
     int width, height;
-    fscanf(arquivo, "%2s, %d, %d", format, &width, &height);
+    if(fscanf(arquivo, "%2s, %d, %d", format, &width, &height)){
+        fprintf(stderr, "Erro ao ler o formato ou as dimensões da imagem\n");
+        fclose(arquivo);
+        exit(EXIT_FAILURE);
+    }
+    
+    if(width!=209 || height!=58){
+        fprintf(stderr, "Dimensões da imagem não correspondem às esperadas\n");
+        fclose(arquivo);
+        exit(EXIT_FAILURE);
+    }
 
     //leitura dos dados a serem processados
     for(int y=0; y<HEIGHT; y++){
         for(int x=0; x<WIDTH; x++){
-            char c;
+            int c;
             do{
                 c=fgetc(arquivo);
+                //pula caracteres de espaço
+                if(c==' ' || c=='\t' || c=='\n' || c=='\r' ){
+                    continue;
+                }
             }while(c!='0' && c!='1' && c!=EOF);
             if(c==EOF){
                 fprintf(stderr, "Erro inesperado de fim de arquivo\n");
