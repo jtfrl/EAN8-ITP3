@@ -105,7 +105,7 @@ int main(int argc, char*argv[]){
     carrega_pbm(argv[1], image);
     //argv[1] guarda o nome do arquivo em .pbm
     verbarra_pbm(image, &x, &y, &larg, &alt);
-    decode_ean8(bin_representa, decode_d, status);
+    decode_ean8(bin_representa, decode_d, &status);
     checasoma(decode_d);
 
 
@@ -126,7 +126,7 @@ int main(int argc, char*argv[]){
     //copia os elementos da imagem para a variável
     for(int i=0;i<HEIGHT;i++){
         for (int j=0;j<WIDTH;j++){
-            dadosImg[i][j]=image[i][j]
+            dadosImg[i][j]=image[i][j];
         }
     }
     
