@@ -58,18 +58,22 @@ unsigned char** dados_pbm(FILE *file, int width, int height){
 
 }
 
-//função que vai liberar a alocação de memória
-
+/*função que vai liberar a alocação de memória
 void libera_pbm(unsigned char **image, int height){
     for (int i=0;i<height;i++){
         free(image[i]);
     }
     free(image);
 }
+*/
+
+void libera_pbm(int dadosImg[HEIGHT][WIDTH], int height);
+//declaração implícita
 
 int main(int argc, char*argv[]){ 
 
     int image[HEIGHT][WIDTH] = {0}; 
+    int status;
     int x, y, larg, alt;
     int bin_representa[56]={0}, decode_d[8]={0};
     //IMPORTANTE inlcuir variáveis usadas em carregapbm
@@ -101,29 +105,16 @@ int main(int argc, char*argv[]){
     carrega_pbm(argv[1], image);
     //argv[1] guarda o nome do arquivo em .pbm
     verbarra_pbm(image, &x, &y, &larg, &alt);
-    decode_ean8(bin_representa, decode_d);
+    decode_ean8(bin_representa, decode_d, status);
     checasoma(decode_d);
 
 
-    //cadeia de condição para decode.h; esboço a seguir
-
-    /*
-      if (verifica_ean8(image)) {
-        printf("EAN-8 code detected\n");
-    } else {
-        printf("EAN-8 code not detected\n");
-    }
     
-    
-    */
-    //decodificação e checagem de soma
-    int decode_r=decode_ean8(bin_representa, decode_d); //não é possível fazer isso
-    //decode_ean8 é uma função do tipo void
     int checaSoma=checasoma(decode_d);
 
 
 
-    if(decode_r!=0 && checaSoma!=0){
+    if(status!=0 && checaSoma!=0){
         printf("Código EAN-8\n");
         for (int k=0; k<8;k++){
             printf("%d ", decode_d[k]);
@@ -131,8 +122,15 @@ int main(int argc, char*argv[]){
         printf("\n");
     }
 
+    int dadosImg[HEIGHT][WIDTH];
+    //copia os elementos da imagem para a variável
+    for(int i=0;i<HEIGHT;i++){
+        for (int j=0;j<WIDTH;j++){
+            dadosImg[i][j]=image[i][j]
+        }
+    }
     
-    libera_pbm(image[58][209],height); //ver como image é definida como array
+    libera_pbm(dadosImg,height);
 
     return 0;
 }
