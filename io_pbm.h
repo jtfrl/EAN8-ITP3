@@ -23,7 +23,9 @@ unsigned short largBarra(const unsigned char* buf){
 
 //IMPORTANTE: a parte acima acho que vai ser válida para decode.h
 
-void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]){
+void carrega_pbm(const char *filename, int image_d[HEIGHT][WIDTH]){
+	//image_d carrega os dados do PBM; diferente da variável image
+	//em id_main.c
     FILE *arquivo=fopen(filename, "r");
     //aqui começa a leitura de fato e o carregamento em si
     if(arquivo==NULL){
@@ -33,14 +35,11 @@ void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]){
     //podemos partir do ponto em que a checagem de formato já foi feita
     char format[3];
     int width, height;
-    fscanf(arquivo, "%2s, %d, %d", format, &width, &height);
+    fscanf(arquivo, "%2s %d %d", format, &width, &height);
 
     //leitura dos dados a serem processados
     for(int y=0; y<HEIGHT; y++){
         for(int x=0; x<WIDTH; x++){
-            char c;
-            do{
-                c=fgetc(arquivo);
             int c;
             do{
                 c=fgetc(arquivo);
@@ -55,7 +54,7 @@ void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]){
                 exit(EXIT_FAILURE);
             }
 
-            image[y][x]=(c=='1') ? 1 : 0;
+            image_d[y][x]=(c=='1') ? 1 : 0;
 
             //avalia cada dado em imagem, sendo um ou zero 
         }
