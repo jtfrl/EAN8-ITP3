@@ -42,14 +42,25 @@ void decode_ean8(int bin_representa[], int decode_d[], int *status){
     //decodifica barras
     //busca pelos dígitos iniciais e os dígitos finais
 
+<<<<<<< HEAD
  
     for (int i=0;i<4;i++){
         //decodifica os numeros da esquerda
+=======
+    *status=1; //inicia o valor de status como 1 (valor para estabilidade na decodificação)
+    for (int i=0;i<4;i++){
+        //decodifica os numeros da esquerda
+        int corretoEsq=0; //0 indica resultado para falso
+>>>>>>> origin/main
         for(int j=0;j<10;j++){
             int corretoEsq=1;
             for (int k=0; k<7; k++){
                 if(bin_representa[i*7+k]!=left_digit_patterns[j][k]){
+<<<<<<< HEAD
                     corretoEsq=0;
+=======
+                    corretoEsq=0; //qualquer incoerência é detectada aqui
+>>>>>>> origin/main
                     break;
                 }
             }
@@ -58,6 +69,7 @@ void decode_ean8(int bin_representa[], int decode_d[], int *status){
                 break;
             }
         }
+<<<<<<< HEAD
     }
     int val_corretoEsq=corretoEsq;
 
@@ -65,6 +77,19 @@ void decode_ean8(int bin_representa[], int decode_d[], int *status){
         //decodifica os numeros da direita
         for(int j=0;j<10;j++){
             int corretoDir=1; //verificador de correção para direita
+=======
+        if(!corretoEsq){
+        *status=0; //indica falha
+        return;
+        }
+    }
+
+     for (int i=4;i<8;i++){
+        //decodifica os numeros da direita
+        int corretoDir=0;
+        for(int j=0;j<10;j++){
+            corretoDir=1; //verificador de correção para direita
+>>>>>>> origin/main
             for (int k=0; k<7; k++){
                 if(bin_representa[(i*7)+k]!=right_digit_patterns[j][k]){
                     corretoDir=0;
@@ -76,6 +101,7 @@ void decode_ean8(int bin_representa[], int decode_d[], int *status){
                 break;
             }
         }
+<<<<<<< HEAD
     }
     int val_corretoDir=corretoDir;
 
@@ -85,6 +111,15 @@ void decode_ean8(int bin_representa[], int decode_d[], int *status){
     }else{
         *status=1;//indica sucesso
     }
+=======
+        if(!corretoDir){
+            *status=0;
+            return;
+        }
+    }
+
+//essa opção deixa a declaração interna aos loops simples
+>>>>>>> origin/main
 }
 
 int checasoma(int decode_d[]){
@@ -100,4 +135,8 @@ int checasoma(int decode_d[]){
 }
 
 
+<<<<<<< HEAD
 #endif //previne redefinição com DECODE_H
+=======
+#endif //previne redefinição com DECODE_H
+>>>>>>> origin/main
