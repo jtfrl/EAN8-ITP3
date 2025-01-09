@@ -33,30 +33,14 @@ void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]){
     //podemos partir do ponto em que a checagem de formato já foi feita
     char format[3];
     int width, height;
-<<<<<<< HEAD
     fscanf(arquivo, "%2s, %d, %d", format, &width, &height);
-=======
-    if(fscanf(arquivo, "%2s, %d, %d", format, &width, &height)){
-        fprintf(stderr, "Erro ao ler o formato ou as dimensões da imagem\n");
-        fclose(arquivo);
-        exit(EXIT_FAILURE);
-    }
-    
-    if(width!=209 || height!=58){
-        fprintf(stderr, "Dimensões da imagem não correspondem às esperadas\n");
-        fclose(arquivo);
-        exit(EXIT_FAILURE);
-    }
->>>>>>> origin/main
 
     //leitura dos dados a serem processados
     for(int y=0; y<HEIGHT; y++){
         for(int x=0; x<WIDTH; x++){
-<<<<<<< HEAD
             char c;
             do{
                 c=fgetc(arquivo);
-=======
             int c;
             do{
                 c=fgetc(arquivo);
@@ -64,7 +48,6 @@ void carrega_pbm(const char *filename, int image[HEIGHT][WIDTH]){
                 if(c==' ' || c=='\t' || c=='\n' || c=='\r' ){
                     continue;
                 }
->>>>>>> origin/main
             }while(c!='0' && c!='1' && c!=EOF);
             if(c==EOF){
                 fprintf(stderr, "Erro inesperado de fim de arquivo\n");
@@ -109,7 +92,4 @@ void verbarra_pbm(int imagem[HEIGHT][WIDTH], int *x, int *y, int *larg, int *alt
         free(pImg);
 
 }
-<<<<<<< HEAD
-=======
  
->>>>>>> origin/main
