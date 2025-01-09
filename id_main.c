@@ -74,7 +74,7 @@ int main(int argc, char*argv[]){
         image[i]=(int *)malloc(WIDTH *sizeof(int));
     }
 
-    carrega_pbm(argv[1], image);
+    carrega_pbm(argv[1], image_d);
 
     int image[HEIGHT][WIDTH] = {0}; 
     int status;
