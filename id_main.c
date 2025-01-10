@@ -58,7 +58,7 @@ unsigned char** dados_pbm(FILE *file, int width, int height){
 
 }
 
-void libera_pbm(int **dadosImg, int *height){
+void libera_pbm(int **dadosImg, int height){
     for(int i=0;i<height;i++){
         free(dadosImg[i]);
     }    
@@ -66,17 +66,19 @@ void libera_pbm(int **dadosImg, int *height){
 }//libera a alocação com o ponteiro
 
 int main(int argc, char*argv[]){ 
-
+    int image_d[HEIGHT][WIDTH];
     //alocação dinâmmica para dados da imagem
-    int **image=(int **)malloc(HEIGHT * sizeof(int *));
+    int **image_dnm=(int **)malloc(HEIGHT * sizeof(int *));
     //precisamos da alocação para cada número dado na altura
+    //image_dnm: array 2D alocado dinamicamente
     for (int i=0;i<HEIGHT;i++){
-        image[i]=(int *)malloc(WIDTH *sizeof(int));
+        image_dnm[i]=(int *)malloc(WIDTH *sizeof(int));
     }
 
     carrega_pbm(argv[1], image_d);
-
-    int image[HEIGHT][WIDTH] = {0}; 
+    
+    int image[HEIGHT][WIDTH] = {0};
+    //int image[HEIGHT][WIDTH];
     int status;
     int x, y, larg, alt;
     int width, height;
@@ -133,12 +135,9 @@ int main(int argc, char*argv[]){
         }
     }
     
-    libera_pbm(image,height);
+    libera_pbm(image_dnm,height);
     //libera para image
-    libera_pbm(dadosImg,height);
-    //libera para dadosImg
 
     return 0;
 }
-
 
