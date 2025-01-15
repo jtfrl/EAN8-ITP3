@@ -78,14 +78,11 @@ int main(int argc, char*argv[]){
     carrega_pbm(argv[1], image_d);
     
     int image[HEIGHT][WIDTH] = {0};
-    //int image[HEIGHT][WIDTH];
     int status;
     int x, y, larg, alt;
     int width, height;
     int bin_representa[56]={0}, decode_d[8]={0};
-    //IMPORTANTE inlcuir variáveis usadas em carregapbm
     
-    //main que vai receber o que o usuário irá fornecer
     if(argc!=2){
         fprintf(stderr, "Usage: %s <pbm_file>\n", argv[0]);
         return 1;
@@ -98,16 +95,9 @@ int main(int argc, char*argv[]){
         return 1;
     }
     
-    /* TESTE: verificando se o trecho está causando redefinição
-    if(cabeca_pbm(arquivo, &width, &height)!=0){
-        fclose(arquivo);
-        return 1;
-    }
-    */
+
     fclose(arquivo);
 
-
-    
     //argv[1] guarda o nome do arquivo em .pbm
     verbarra_pbm(image, &x, &y, &larg, &alt);
     decode_ean8(bin_representa, decode_d, &status);
