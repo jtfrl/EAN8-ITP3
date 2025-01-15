@@ -21,8 +21,6 @@ unsigned short largBarra(const unsigned char* buf){
     return larg_Barra;
 }
 
-//IMPORTANTE: a parte acima acho que vai ser válida para decode.h
-
 void carrega_pbm(const char *filename, int image_d[HEIGHT][WIDTH]){
 	//image_d carrega os dados do PBM; diferente da variável image
 	//em id_main.c
