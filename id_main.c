@@ -58,7 +58,7 @@ unsigned char** dados_pbm(FILE *arquivo, int width, int height){
 
 }
 
-void libera_pbm(int **dadosImg, int height){
+void libera_pbm(unsigned char **dadosImg, int height){
     for(int i=0;i<height;i++){
         free(dadosImg[i]);
     }    
@@ -98,7 +98,7 @@ int main(int argc, char*argv[]){
     }
 
     fclose(arquivo); 
-    //argv[1] guarda o nome do arquivo em .pbm
+    
     verbarra_pbm(image_novo, &x, &y, &larg, &alt);
     decode_ean8(bin_representa, decode_d, &status);
     
