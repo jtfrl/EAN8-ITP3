@@ -102,7 +102,11 @@ int main(int argc, char*argv[]){
     verbarra_pbm(image_novo, &x, &y, &larg, &alt);
     decode_ean8(bin_representa, decode_d, &status);
     
+
+    
     int checaSoma=checasoma(decode_d);
+    //elementos para debug
+    printf("Status: %d, Valor para checagem da soma: %d\n", status, checaSoma);
 
     if(status!=0 && checaSoma!=0){
         printf("Código EAN-8\n");
@@ -110,6 +114,8 @@ int main(int argc, char*argv[]){
             printf("%d ", decode_d[k]);
         }
         printf("\n");
+    }else{
+        printf("Falha em decodificar o código EAN-8.\n");
     }
     
     libera_pbm(image_novo,height);
