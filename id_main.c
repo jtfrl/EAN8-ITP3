@@ -29,16 +29,16 @@ int cabeca_pbm(FILE *arquivo, int *width, int *height){
 
 
 unsigned char** dados_pbm(FILE *arquivo, int width, int height){
-    unsigned char **image = (unsigned char **)malloc(height *sizeof(unsigned char *));
+    unsigned char **image_novo = (unsigned char **)malloc(height *sizeof(unsigned char *));
     //cria espaço na memória para altura da imagem fornecida 
-    if(image==NULL){
+    if(image_novo==NULL){
         fprintf(stderr, "ERRO: falha na alocação de memória\n");
         return NULL;
     }
 
     for (int i=0; i<height;i++){
-        image[i]=(unsigned char *)malloc(width * sizeof(unsigned char));
-        if (image[i]==NULL){
+        image_novo[i]=(unsigned char *)malloc(width * sizeof(unsigned char));
+        if (image_novo[i]==NULL){
             fprintf(stderr, "ERRO: falha de alocação da memória nas linhas da imagem\n");
             return NULL;
         }
@@ -46,7 +46,7 @@ unsigned char** dados_pbm(FILE *arquivo, int width, int height){
 
     for (int i=0; i<height;i++){
         for(int j=0;j<width;j++){
-            if((fscanf(arquivo,"%hhu", &image[i][j])!=1)){ //alterar comparação de ponteiro
+            if((fscanf(arquivo,"%hhu", &image_novo[i][j])!=1)){ //alterar comparação de ponteiro
                 fprintf(stderr,"ERRO: falha em ler dados de imagem\n");
                 return NULL;
             }
@@ -54,7 +54,7 @@ unsigned char** dados_pbm(FILE *arquivo, int width, int height){
     }
 
 
-    return image;
+    return image_novo;
 
 }
 
@@ -66,18 +66,7 @@ void libera_pbm(int **dadosImg, int height){
 }//libera a alocação com o ponteiro
 
 int main(int argc, char*argv[]){ 
-    //int image_d[HEIGHT][WIDTH];
-    //alocação dinâmmica para dados da imagem
-    // int **image_dnm=(int **)malloc(HEIGHT * sizeof(int *));
-    //precisamos da alocação para cada número dado na altura
-    //image_dnm: array 2D alocado dinamicamente
 
-    /*
-    for (int i=0;i<HEIGHT;i++){
-        image_dnm[i]=(int *)malloc(WIDTH *sizeof(int));
-    }
-    */
-    //int image[HEIGHT][WIDTH] = {0}; 
 
     int status;
     int x, y, larg, alt;
@@ -97,7 +86,6 @@ int main(int argc, char*argv[]){
         return 1;
     }
     
-    
     if(cabeca_pbm(arquivo, &width, &height)!=0){
         fclose(arquivo);
         return 1;
@@ -113,8 +101,6 @@ int main(int argc, char*argv[]){
     //argv[1] guarda o nome do arquivo em .pbm
     verbarra_pbm(image_novo, &x, &y, &larg, &alt);
     decode_ean8(bin_representa, decode_d, &status);
-    //checasoma(decode_d);
-
     
     int checaSoma=checasoma(decode_d);
 
@@ -125,19 +111,9 @@ int main(int argc, char*argv[]){
         }
         printf("\n");
     }
-
-    /*
-    int dadosImg[HEIGHT][WIDTH];
-    //copia os elementos da imagem para a variável
-    for(int i=0;i<HEIGHT;i++){
-        for (int j=0;j<WIDTH;j++){
-            dadosImg[i][j]=image[i][j];
-        }
-    }
-    */
     
     libera_pbm(image_novo,height);
-    //libera para image
+    //libera para image_novo
 
     return 0;
 }
