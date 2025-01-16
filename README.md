@@ -10,6 +10,12 @@ A seguir, uma descrição breve de cada arquivo para **identificador de códigos
 - id_main.c: código que vai receber o que o usuário inserir (nesse caso a imagem em .pbm). Especificamente, ele recebe a imagem .pbm inserida pelo usuário, chama as funções necessárias para ler o arquivo, detectar as barras e decodificar o código EAN-8, e finalmente apresenta o resultado ao usuário. Também executa o seguinte:
     - fornece funções para abrir e ler o conteúdo de arquivos .pbm, transformando-os em uma estrutura de dados utilizável pelo programa.
 
+## Instruções para abertura do programa de identificador de códigos:
+É recomendável que se use o PowerShell. Ao abrir:
+
+    1. Coloque o caminho do arquivo (`C:\Users\caminho\do\arquivo\do\programa`)
+    2. Compile o programa via gcc (`gcc -o nomedoprograma programa.c`)
+    3. Execute o programa junto ao arquivo, indicando o nome do .pbm entre aspas (`.\nomedoprograma "arquivo.pbm`)
 
  
 [gerador de códigos EAN-8: a ser adicionado]
