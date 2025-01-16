@@ -62,12 +62,12 @@ void carrega_pbm(const char *filename, int image_d[HEIGHT][WIDTH]){
 
 }
 
-void verbarra_pbm(int imagem[HEIGHT][WIDTH], int *x, int *y, int *larg, int *alt){
+void verbarra_pbm(unsigned char **image_novo, int *x, int *y, int *larg, int *alt){
         //converte a imagem de 2D para 1D
         unsigned char* pImg = (unsigned char*)malloc(HEIGHT * WIDTH *sizeof(unsigned char));
         for(int y=0;y<HEIGHT;y++){
             for(int x=0;x<WIDTH;x++){
-                pImg[y*WIDTH+x]=(unsigned char)imagem[y][x];
+                pImg[y*WIDTH+x]=(unsigned char)image_novo[y][x];
             }
         }
 
