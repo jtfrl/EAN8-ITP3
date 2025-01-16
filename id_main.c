@@ -66,15 +66,17 @@ void libera_pbm(int **dadosImg, int height){
 }//libera a alocação com o ponteiro
 
 int main(int argc, char*argv[]){ 
-    int image_d[HEIGHT][WIDTH];
+    //int image_d[HEIGHT][WIDTH];
     //alocação dinâmmica para dados da imagem
-    int **image_dnm=(int **)malloc(HEIGHT * sizeof(int *));
+    // int **image_dnm=(int **)malloc(HEIGHT * sizeof(int *));
     //precisamos da alocação para cada número dado na altura
     //image_dnm: array 2D alocado dinamicamente
+
+    /*
     for (int i=0;i<HEIGHT;i++){
         image_dnm[i]=(int *)malloc(WIDTH *sizeof(int));
     }
-
+    */
     //int image[HEIGHT][WIDTH] = {0}; 
 
     int status;
@@ -109,7 +111,7 @@ int main(int argc, char*argv[]){
 
     fclose(arquivo); 
     //argv[1] guarda o nome do arquivo em .pbm
-    verbarra_pbm(image_d, &x, &y, &larg, &alt);
+    verbarra_pbm(image_novo, &x, &y, &larg, &alt);
     decode_ean8(bin_representa, decode_d, &status);
     //checasoma(decode_d);
 
@@ -134,7 +136,7 @@ int main(int argc, char*argv[]){
     }
     */
     
-    libera_pbm(image_dnm,height);
+    libera_pbm(image_novo,height);
     //libera para image
 
     return 0;
