@@ -115,11 +115,14 @@ int main(int argc, char*argv[]){
         }
         printf("\n");
     }else{
-        printf("Falha em decodificar o código EAN-8.\n");
+        printf("Falha em decodificar o codigo EAN-8.\n");
     }
     
     libera_pbm(image_novo,height);
     //libera para image_novo
+
+    printf("Pressione 'Enter' para sair\n");
+    getchar();
 
     return 0;
 }
