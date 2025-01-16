@@ -109,7 +109,7 @@ int main(int argc, char*argv[]){
 
     fclose(arquivo); 
     //argv[1] guarda o nome do arquivo em .pbm
-    verbarra_pbm(image, &x, &y, &larg, &alt);
+    verbarra_pbm(image_d, &x, &y, &larg, &alt);
     decode_ean8(bin_representa, decode_d, &status);
     //checasoma(decode_d);
 
