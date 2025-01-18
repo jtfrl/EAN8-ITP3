@@ -54,7 +54,7 @@ unsigned char** dados_pbm(FILE *arquivo, int width, int height){
     }
 	for (int i=0; i<5; i++){
 		for (int k=0; k<width; k++){
-		printf("%c", image_novo[i][k];
+		printf("%c", image_novo[i][k]);
 		}
 		printf("\n");
 	}
@@ -73,8 +73,6 @@ void libera_pbm(unsigned char **dadosImg, int height){
 }//libera a alocação com o ponteiro
 
 int main(int argc, char*argv[]){ 
-
-
     int status;
     int x, y, larg, alt;
     int width, height;
@@ -109,6 +107,14 @@ int main(int argc, char*argv[]){
     verbarra_pbm(image_novo, &x, &y, &larg, &alt);
     extrai_bin(image_novo, height, width, bin_representa);
     decode_ean8(bin_representa, decode_d, &status);
+	
+	printf("Representação binária extraída: ");
+    for (int i = 0; i < 56; i++) {
+        printf("%d", bin_representa[i]);
+    }
+    printf("\n");
+    
+
     
     int checaSoma=checasoma(decode_d);
     //elementos para debug
