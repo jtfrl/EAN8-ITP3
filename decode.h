@@ -3,13 +3,14 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <errno.h>
 #include <math.h>
 #include "io_pbm.h" 
 
 const int start_end_pattern[] = {1, 0, 1};
-const int f_end_pattern[] = {1, 0, 1};
-const int c_end_pattern[] = {0, 1, 0, 1, 0};
+const int f_end_pattern[] = {1, 0, 1}; //right guard
+const int c_end_pattern[] = {0, 1, 0, 1, 0}; //left guard
 const int left_digit_patterns[10][7] = {
     {0, 0, 0, 1, 1, 0, 1},
     {0, 0, 1, 1, 0, 0, 1},
@@ -37,11 +38,53 @@ const int right_digit_patterns[10][7] = {
    {1, 1, 1, 0, 1, 0, 0}
 };
 
+//funcao para achar os numeros entre as barras
+int padroesBarra(unsigned char **image_novo, int width, int height, const int *padrao, int padraoTam){
+	 if (image_novo == NULL || padrao == NULL) {
+        fprintf(stderr, "Ponteiro nulo detectado\n");
+        return -1;
+	}
+	for (int y=0; y<height; y++){
+		for (int x=0; x<=width-padraoTam;x++){
+				int corretoBarra=1;
+				for (int p=0; p<padraoTam; p++){
+					if(image_novo[y][x+p]!=padrao[p]){
+					corretoBarra=0;
+					break;
+					}
+				}
+				if(corretoBarra){
+				return x;
+				}
+			}
+		}
+	return -1; //caso o padrão não seja achado
+}
+
+
 //função que vai pegar o código EAN-8 e converter para decimal
 void extrai_bin(unsigned char **image_novo, int width, int height, int bin_representa[]){
-    int index=0;
-    for (int y=0; y<height; y++){
-        for (int x=0; x<width; x++){
+     if (image_novo == NULL || bin_representa == NULL) {
+        fprintf(stderr, "Ponteiro nulo detectado\n");
+        return;
+    }
+	
+	int index=0;
+	int esqGuarda[]={0,1,0,1,0}; 
+	int dirGuarda[]={1,0,1};
+	int f_end_patternTam=sizeof(dirGuarda)/sizeof(dirGuarda[0]);
+	int c_end_patternTam=sizeof(esqGuarda)/sizeof(esqGuarda[0]);
+	
+	int dirPadrao=padroesBarra(image_novo, width, height, dirGuarda, f_end_patternTam);
+	int esqPadrao=padroesBarra(image_novo, width, height, esqGuarda, c_end_patternTam);
+	
+	if (esqPadrao==-1 || dirPadrao ==-1 || dirPadrao<=esqPadrao){
+		printf("Padrões de guarda não foram encontrados ou são invalidos.\n");
+		return;
+	}
+	
+	for (int y=0; y<height; y++){
+        for (int x=esqPadrao+c_end_patternTam; x<dirPadrao; x++){
             if(image_novo[y][x]=='1'){
                 bin_representa[index++]=1;
             }
@@ -53,9 +96,12 @@ void extrai_bin(unsigned char **image_novo, int width, int height, int bin_repre
                 return;
             }
         }
+		if(index>=56){
+			break;
+		}
     }
 	
-	 printf("Representação binária extraída: ");
+	printf("Representação binária extraída: ");
     for (int i = 0; i < 56; i++) {
         printf("%d", bin_representa[i]);
     }
