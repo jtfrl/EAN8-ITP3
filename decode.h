@@ -54,6 +54,12 @@ void extrai_bin(unsigned char **image_novo, int width, int height, int bin_repre
             }
         }
     }
+	
+	 printf("Representação binária extraída: ");
+    for (int i = 0; i < 56; i++) {
+        printf("%d", bin_representa[i]);
+    }
+    printf("\n");
 }
 
 
@@ -107,6 +113,13 @@ void decode_ean8(int bin_representa[], int decode_d[], int *status){
     }
 
 //essa opção deixa a declaração interna aos loops simples
+
+ printf("Valores decodificados: ");
+    for (int i = 0; i < 8; i++) {
+        printf("%d ", decode_d[i]);
+    }
+    printf("\n");
+
 }
 
 int checasoma(int decode_d[]){
