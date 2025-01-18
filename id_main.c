@@ -100,6 +100,7 @@ int main(int argc, char*argv[]){
     fclose(arquivo); 
     
     verbarra_pbm(image_novo, &x, &y, &larg, &alt);
+    extrain_bin(image_novo, height, width, bin_representa);
     decode_ean8(bin_representa, decode_d, &status);
     
 
