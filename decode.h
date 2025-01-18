@@ -37,6 +37,25 @@ const int right_digit_patterns[10][7] = {
    {1, 1, 1, 0, 1, 0, 0}
 };
 
+//função que vai pegar o código EAN-8 e converter para decimal
+void extrai_bin(unsigned char **image_novo, int width, int height, int bin_representa[]){
+    int index=0;
+    for (int y=0; y<height; y++){
+        for (int x=0; x<width; x++){
+            if(image_novo[y][x]=='1'){
+                bin_representa[index++]=1;
+            }
+            else{
+                bin_representa[index++]=0;
+            }
+            if(index>=56){
+                //para na analise dos 56 bits.
+                return;
+            }
+        }
+    }
+}
+
 
 void decode_ean8(int bin_representa[], int decode_d[], int *status){
     //decodifica barras
