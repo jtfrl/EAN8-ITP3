@@ -52,6 +52,13 @@ unsigned char** dados_pbm(FILE *arquivo, int width, int height){
             }
         }
     }
+	for (int i=0; i<5; i++){
+		for (int k=0; k<width; k++){
+		printf("%c", image_novo[i][k];
+		}
+		printf("\n");
+	}
+	
 
 
     return image_novo;
@@ -100,10 +107,8 @@ int main(int argc, char*argv[]){
     fclose(arquivo); 
     
     verbarra_pbm(image_novo, &x, &y, &larg, &alt);
-    extrain_bin(image_novo, height, width, bin_representa);
+    extrai_bin(image_novo, height, width, bin_representa);
     decode_ean8(bin_representa, decode_d, &status);
-    
-
     
     int checaSoma=checasoma(decode_d);
     //elementos para debug
