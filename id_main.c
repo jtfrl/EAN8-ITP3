@@ -72,6 +72,7 @@ void libera_pbm(unsigned char **dadosImg, int height){
     free(dadosImg);
 }//libera a alocação com o ponteiro
 
+
 int main(int argc, char*argv[]){ 
     int status;
     int x, y, larg, alt;
@@ -79,6 +80,8 @@ int main(int argc, char*argv[]){
     unsigned char **image_novo; //variável para receber dados do pbm
     int bin_representa[56]={0}, decode_d[8]={0};
     
+	
+	
     if(argc!=2){
         fprintf(stderr, "Usage: %s <pbm_file>\n", argv[0]);
         return 1;
@@ -94,7 +97,9 @@ int main(int argc, char*argv[]){
     if(cabeca_pbm(arquivo, &width, &height)!=0){
         fclose(arquivo);
         return 1;
-    }
+	}
+	
+
     
     image_novo=dados_pbm(arquivo, width, height);
     if(image_novo==NULL){
@@ -105,10 +110,12 @@ int main(int argc, char*argv[]){
     fclose(arquivo); 
     
     verbarra_pbm(image_novo, &x, &y, &larg, &alt);
-    extrai_bin(image_novo, height, width, bin_representa);
+	
+	int area=(int)((width-6)/67);
+    extrai_bin(image_novo, area, bin_representa);
     decode_ean8(bin_representa, decode_d, &status);
 	
-	printf("Representação binária extraída: ");
+	printf("Representacao binaria extraida: ");
     for (int i = 0; i < 56; i++) {
         printf("%d", bin_representa[i]);
     }
@@ -117,7 +124,6 @@ int main(int argc, char*argv[]){
 
     
     int checaSoma=checasoma(decode_d);
-    //elementos para debug
     printf("Status: %d, Valor para checagem da soma: %d\n", status, checaSoma);
 
     if(status!=0 && checaSoma!=0){
