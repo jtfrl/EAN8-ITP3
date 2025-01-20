@@ -6,11 +6,11 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <math.h>
-#include "io_pbm.h" 
+#include "io_pbm.h"
 
 const int start_end_pattern[] = {1, 0, 1};
-const int f_end_pattern[] = {1, 0, 1}; //right guard
-const int c_end_pattern[] = {0, 1, 0, 1, 0}; //left guard
+const int f_end_pattern[] = {1, 0, 1};       // right guard
+const int c_end_pattern[] = {0, 1, 0, 1, 0}; // left guard
 const int left_digit_patterns[10][7] = {
     {0, 0, 0, 1, 1, 0, 1},
     {0, 0, 1, 1, 0, 0, 1},
@@ -21,164 +21,168 @@ const int left_digit_patterns[10][7] = {
     {0, 1, 0, 1, 1, 1, 1},
     {0, 1, 1, 1, 0, 1, 1},
     {0, 1, 1, 0, 1, 1, 1},
-    {0, 0, 0, 1, 0, 1, 1}
-};
-
+    {0, 0, 0, 1, 0, 1, 1}};
 
 const int right_digit_patterns[10][7] = {
-   {1, 1, 1, 0, 0, 1, 0},
-   {1, 1, 0, 0, 1, 1, 0},
-   {1, 1, 0, 1, 1, 0, 0},
-   {1, 0, 0, 0, 0, 1, 0},
-   {1, 0, 1, 1, 1, 0, 0},
-   {1, 0, 0, 1, 1, 1, 0},
-   {1, 0, 1, 0, 0, 0, 0},
-   {1, 0, 0, 0, 1, 0, 0},
-   {1, 0, 0, 1, 0, 0, 0},
-   {1, 1, 1, 0, 1, 0, 0}
-};
+    {1, 1, 1, 0, 0, 1, 0},
+    {1, 1, 0, 0, 1, 1, 0},
+    {1, 1, 0, 1, 1, 0, 0},
+    {1, 0, 0, 0, 0, 1, 0},
+    {1, 0, 1, 1, 1, 0, 0},
+    {1, 0, 0, 1, 1, 1, 0},
+    {1, 0, 1, 0, 0, 0, 0},
+    {1, 0, 0, 0, 1, 0, 0},
+    {1, 0, 0, 1, 0, 0, 0},
+    {1, 1, 1, 0, 1, 0, 0}};
 
-//funcao para achar os numeros entre as barras
-int padroesBarra(unsigned char **image_novo, int width, int height, const int *padrao, int padraoTam){
-	 if (image_novo == NULL || padrao == NULL) {
+// funcao para achar os numeros entre as barras
+int padroesBarra(unsigned char **image_novo, int width, int height, const int *padrao, int padraoTam)
+{
+    if (image_novo == NULL || padrao == NULL)
+    {
         fprintf(stderr, "Ponteiro nulo detectado\n");
         return -1;
-	}
-	for (int y=0; y<height; y++){
-		for (int x=0; x<=width-padraoTam;x++){
-				int corretoBarra=1;
-				for (int p=0; p<padraoTam; p++){
-					if(image_novo[y][x+p]!=padrao[p]){
-					corretoBarra=0;
-					break;
-					}
-				}
-				if(corretoBarra){
-				return x;
-				}
-			}
-		}
-	return -1; //caso o padrão não seja achado
+    }
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x <= width - padraoTam; x++)
+        {
+            int corretoBarra = 1;
+            for (int p = 0; p < padraoTam; p++)
+            {
+                if (image_novo[y][x + p] != padrao[p])
+                {
+                    corretoBarra = 0;
+                    break;
+                }
+            }
+            if (corretoBarra)
+            {
+                return x;
+            }
+        }
+    }
+    return -1; // caso o padrão não seja achado
 }
 
-
-//função que vai pegar o código EAN-8 e converter para decimal
-void extrai_bin(unsigned char **image_novo, int width, int height, int bin_representa[]){
-     if (image_novo == NULL || bin_representa == NULL) {
+// função que vai pegar o código EAN-8 e converter para decimal
+void extrai_bin(unsigned char **image_novo, int area, int bin_representa[])
+{
+    if (image_novo == NULL || bin_representa == NULL)
+    {
         fprintf(stderr, "Ponteiro nulo detectado\n");
         return;
     }
-	
-	int index=0;
-	int esqGuarda[]={0,1,0,1,0}; 
-	int dirGuarda[]={1,0,1};
-	int f_end_patternTam=sizeof(dirGuarda)/sizeof(dirGuarda[0]);
-	int c_end_patternTam=sizeof(esqGuarda)/sizeof(esqGuarda[0]);
-	
-	int dirPadrao=padroesBarra(image_novo, width, height, dirGuarda, f_end_patternTam);
-	int esqPadrao=padroesBarra(image_novo, width, height, esqGuarda, c_end_patternTam);
-	
-	if (esqPadrao==-1 || dirPadrao ==-1 || dirPadrao<=esqPadrao){
-		printf("Padrões de guarda não foram encontrados ou são invalidos.\n");
-		return;
-	}
-	
-	for (int y=0; y<height; y++){
-        for (int x=esqPadrao+c_end_patternTam; x<dirPadrao; x++){
-            if(image_novo[y][x]=='1'){
-                bin_representa[index++]=1;
-            }
-            else{
-                bin_representa[index++]=0;
-            }
-            if(index>=56){
-                //para na analise dos 56 bits.
-                return;
-            }
-        }
-		if(index>=56){
-			break;
-		}
+
+    int row = 7;
+    int start_column = 3 * area + 3; // 3 = espaçamento, 3 * area = pular tres areas;
+
+    for (int x = 0; x < 28; x++)
+    {
+        bin_representa[x] = image_novo[row][start_column]; // Pega somente primeiro dígito da área
+        start_column+= area;                // Avanço de área
     }
-	
-	printf("Representação binária extraída: ");
-    for (int i = 0; i < 56; i++) {
+
+    start_column += area * 5; // Pula cinco áreas
+
+    for (int x = 0; x < 28; x++)
+    {
+        bin_representa[x + 28] = image_novo[row][start_column]; // Pega somente primeiro dígito da área
+        start_column += area;                     // Avanço de área
+    }
+
+    printf("Representacao binaria extraida: ");
+    for (int i = 0; i < 56; i++)
+    {
         printf("%d", bin_representa[i]);
     }
     printf("\n");
 }
 
+void decode_ean8(int bin_representa[], int decode_d[], int *status)
+{
+    // decodifica barras
+    // busca pelos dígitos iniciais e os dígitos finais
 
-void decode_ean8(int bin_representa[], int decode_d[], int *status){
-    //decodifica barras
-    //busca pelos dígitos iniciais e os dígitos finais
-
-    *status=1; //inicia o valor de status como 1 (valor para estabilidade na decodificação)
-    for (int i=0;i<4;i++){
-        //decodifica os numeros da esquerda
-        int corretoEsq=0; //0 indica resultado para falso
-        for(int j=0;j<10;j++){
-            int corretoEsq=1;
-            for (int k=0; k<7; k++){
-                if(bin_representa[i*7+k]!=left_digit_patterns[j][k]){
-                    corretoEsq=0; //qualquer incoerência é detectada aqui
+    *status = 1; // inicia o valor de status como 1 (valor para estabilidade na decodificação)
+    for (int i = 0; i < 4; i++)
+    {
+        // decodifica os numeros da esquerda
+        int corretoEsq = 0; // 0 indica resultado para falso
+        for (int j = 0; j < 10; j++)
+        {
+            int corretoEsq = 1;
+            for (int k = 0; k < 7; k++)
+            {
+                if (bin_representa[i * 7 + k] != left_digit_patterns[j][k])
+                {
+                    corretoEsq = 0; // qualquer incoerência é detectada aqui
                     break;
                 }
             }
-            if(corretoEsq){
-                decode_d[i]=j;
+            if (corretoEsq)
+            {
+                decode_d[i] = j;
                 break;
             }
         }
-        if(!corretoEsq){
-        *status=0; //indica falha
-        return;
-        }
-    }
-
-     for (int i=4;i<8;i++){
-        //decodifica os numeros da direita
-        int corretoDir=0;
-        for(int j=0;j<10;j++){
-            corretoDir=1; //verificador de correção para direita
-            for (int k=0; k<7; k++){
-                if(bin_representa[(i*7)+k]!=right_digit_patterns[j][k]){
-                    corretoDir=0;
-                    break;
-                }
-            }
-            if(corretoDir){
-                decode_d[i]=j;
-                break;
-            }
-        }
-        if(!corretoDir){
-            *status=0;
+        if (!corretoEsq)
+        {
+            *status = 0; // indica falha
             return;
         }
     }
 
-//essa opção deixa a declaração interna aos loops simples
+    for (int i = 4; i < 8; i++)
+    {
+        // decodifica os numeros da direita
+        int corretoDir = 0;
+        for (int j = 0; j < 10; j++)
+        {
+            corretoDir = 1; // verificador de correção para direita
+            for (int k = 0; k < 7; k++)
+            {
+                if (bin_representa[(i * 7) + k] != right_digit_patterns[j][k])
+                {
+                    corretoDir = 0;
+                    break;
+                }
+            }
+            if (corretoDir)
+            {
+                decode_d[i] = j;
+                break;
+            }
+        }
+        if (!corretoDir)
+        {
+            *status = 0;
+            return;
+        }
+    }
 
- printf("Valores decodificados: ");
-    for (int i = 0; i < 8; i++) {
+    // essa opção deixa a declaração interna aos loops simples
+
+    printf("Valores decodificados: ");
+    for (int i = 0; i < 8; i++)
+    {
         printf("%d ", decode_d[i]);
     }
     printf("\n");
-
 }
 
-int checasoma(int decode_d[]){
-    int soma=0;
-    for(int i=0;i<8;i++){
-        int pesosEAN=(i%2==0? 3 : 1); 
-        soma+=(decode_d[i])*(pesosEAN); //considera o peso da soma
-        //se par: 3; se ímpar: 1
+int checasoma(int decode_d[])
+{
+    int soma = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        int pesosEAN = (i % 2 == 0 ? 3 : 1);
+        soma += (decode_d[i]) * (pesosEAN); // considera o peso da soma
+        // se par: 3; se ímpar: 1
     }
-    //digito verificador
-    int verifica=(int)(ceil(soma/10))*10-soma;
+    // digito verificador
+    int verifica = (int)(ceil(soma / 10)) * 10 - soma;
     return verifica;
 }
 
-
-#endif //previne redefinição com DECODE_H
+#endif // previne redefinição com DECODE_H
