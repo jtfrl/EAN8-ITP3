@@ -1,9 +1,8 @@
-# EAN8-ITP3 
-![C](https://img.shields.io/badge/language-C-blue)
+# EAN8-ITP3 ![C](https://img.shields.io/badge/language-C-blue)
 
 ---
-![ATUALIZAÇÃO](https://img.shields.io/badge/ATUALIZA%C3%87%C3%83O)
-Agora, cada programa, gerador e identificador, ficam em pastas separadas. Para acessar o gerador, basta ir na pasta `G-EAN8` (autor: @victorjonhson); para ir para o identificador: `ID-EAN8`
+![ATUALIZAÇÃO](https://img.shields.io/badge/ATUALIZA%C3%87%C3%83O-white?style=plastic&logoColor=violet&color=FF0012)
+#### Agora, cada programa, gerador e identificador, ficam em pastas separadas. Para acessar o gerador, basta ir na pasta `G-EAN8` (autor: @victorjonhson); para ir para o identificador: `ID-EAN8`
 Ainda trabalhando para melhorar o código de identificador. 
 ---
 
